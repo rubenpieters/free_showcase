@@ -1,6 +1,6 @@
 package be.rubenpieters.freeshowcase.catsfree
 
-import be.rubenpieters.freeshowcase.PlaylistDsl
+import be.rubenpieters.freeshowcase.{PlaylistDsl, Video}
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class CatsAppOpsTest extends FlatSpec with Matchers {
 
   "createPlaylistFromLiteralList" should "correctly create a playlist" in {
-    val videosInterp = new TestCatsVideoInterp(Map("test" -> List("a", "b", "c"), "test2" -> List("1", "2", "3")))
+    val videosInterp = new TestCatsVideoInterp(Map("test" -> List("a", "b", "c").map(Video("t", _)), "test2" -> List("1", "2", "3").map(Video("t", _))))
     val playlistInterp = new TestCatsPlaylistInterp()
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp)
 
@@ -17,6 +17,8 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     println(result)
     val videos = new CatsPlaylistOps[PlaylistDsl].getVideos(result).foldMap(playlistInterp)
     println(videos)
-    //    videos shouldEqual List("a", "1")
+    videos shouldEqual Right(List("a", "1"))
   }
+
+
 }

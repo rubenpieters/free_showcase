@@ -1,7 +1,7 @@
 package be.rubenpieters.freeshowcase.catsfree
 
 import cats._
-import be.rubenpieters.freeshowcase.{LiteralSearch, VideoDsl, VideoSearchResult}
+import be.rubenpieters.freeshowcase.{LiteralSearch, Video, VideoDsl, VideoSearchResult}
 import cats.free.{Free, Inject}
 
 /**
@@ -16,7 +16,7 @@ object CatsVideoOps {
   implicit def videoOps[F[_]](implicit I: Inject[VideoDsl, F]): CatsVideoOps[F] = new CatsVideoOps[F]
 }
 
-class TestCatsVideoInterp(results: Map[String, List[String]]) extends (VideoDsl ~> Id) {
+class TestCatsVideoInterp(results: Map[String, List[Video]]) extends (VideoDsl ~> Id) {
 
   override def apply[A](fa: VideoDsl[A]): Id[A] = fa match {
     case LiteralSearch(literal) =>
