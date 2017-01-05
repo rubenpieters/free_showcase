@@ -6,8 +6,10 @@ package be.rubenpieters.freeshowcase
 sealed trait PlaylistDsl[A]
 
 case object CreatePlaylist extends PlaylistDsl[Playlist]
-case class GetPlaylistByName(name: String) extends PlaylistDsl[Playlist]
-case class GetPlaylistByUrl(url: String) extends PlaylistDsl[Playlist]
-case class AddVideo(videoUrl: String, playlist: Playlist) extends PlaylistDsl[Unit]
-case class GetVideos(playlist: Playlist) extends PlaylistDsl[List[String]]
+case class GetPlaylistByName(name: String) extends PlaylistDsl[Either[PlaylistDslError, Playlist]]
+case class GetPlaylistByUrl(url: String) extends PlaylistDsl[Either[PlaylistDslError, Playlist]]
+case class AddVideo(videoUrl: String, playlist: Playlist) extends PlaylistDsl[Either[PlaylistDslError, Unit]]
+case class GetVideos(playlist: Playlist) extends PlaylistDsl[Either[PlaylistDslError, List[String]]]
 
+sealed trait PlaylistDslError extends Exception
+class PlaylistNotFound extends PlaylistDslError

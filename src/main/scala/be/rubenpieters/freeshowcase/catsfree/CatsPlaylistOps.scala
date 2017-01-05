@@ -5,6 +5,8 @@ import java.util.UUID
 import be.rubenpieters.freeshowcase.{CreatePlaylist, _}
 import cats.free.{Free, Inject}
 import cats.{Id, ~>}
+import cats._
+import cats.implicits._
 
 /**
   * Created by ruben on 5/01/17.
@@ -33,17 +35,17 @@ class TestCatsPlaylistInterp extends (PlaylistDsl ~> Id) {
       currentPlaylists.update(simulatedUrl, (playlist, List()))
       playlist
     case GetPlaylistByName(name) =>
-      currentPlaylists(name)._1
+      Either.fromOption(currentPlaylists.get(name).map(_._1), new PlaylistNotFound)
     case GetPlaylistByUrl(url) =>
-      currentPlaylists(url)._1
+      Either.fromOption(currentPlaylists.get(url).map(_._1), new PlaylistNotFound)
     case AddVideo(videoUrl, playlist) =>
-      (for {
+      Either.fromOption(for {
         foundPlaylistWithVideos <- currentPlaylists.get(playlist.url)
         (foundPlaylist, foundVideos) = foundPlaylistWithVideos
         _ = currentPlaylists.update(foundPlaylist.url, (foundPlaylist, foundVideos :+ videoUrl))
       } yield ()
-        ).getOrElse(())
+        , new PlaylistNotFound)
     case GetVideos(playlist) =>
-      currentPlaylists(playlist.url)._2
+      Either.fromOption(currentPlaylists.get(playlist.url).map(_._2), new PlaylistNotFound)
   }
 }
