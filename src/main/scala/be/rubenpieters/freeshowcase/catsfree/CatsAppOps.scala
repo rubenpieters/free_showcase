@@ -14,7 +14,7 @@ class CatsAppOps[F[_]](implicit P: CatsPlaylistOps[F], V: CatsVideoOps[F]) {
   def createPlaylistFromLiteralList(list: List[String]): Free[F, Playlist] = for {
     searchResults <- list.traverseU(V.literalSearch)
     newPlaylist <- P.createPlaylist()
-    updatedPlaylist <- searchResults.traverseU(searchResult => P.addVideo(searchResult.results.head.url, newPlaylist))
+    updatedPlaylist <- searchResults.traverseU(searchResult => P.addVideo(searchResult.results.head, newPlaylist))
   } yield newPlaylist
 }
 

@@ -7,4 +7,4 @@ import cats.data.NonEmptyList
   */
 case class VideoSearchResult(results: List[Video])
 
-case class Video(title: String, url: String)
+case class Video(title: String, url: String, videoId: String)

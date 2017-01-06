@@ -9,7 +9,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class CatsAppOpsTest extends FlatSpec with Matchers {
 
   "createPlaylistFromLiteralList" should "correctly create a playlist" in {
-    val videosInterp = new TestCatsVideoInterp(Map("test" -> List("a", "b", "c").map(Video("t", _)), "test2" -> List("1", "2", "3").map(Video("t", _))))
+    val videosInterp = new TestCatsVideoInterp(Map("test" -> List("a", "b", "c"), "test2" -> List("1", "2", "3")).mapValues(_.map(i => Video("t", i, i))))
     val playlistInterp = new TestCatsPlaylistInterp()
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp)
 

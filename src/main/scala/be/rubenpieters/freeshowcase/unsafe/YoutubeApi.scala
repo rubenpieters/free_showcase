@@ -11,10 +11,15 @@ import io.circe.parser._
   * Created by ruben on 5/01/2017.
   */
 object YoutubeApi {
+  val youtubeApiBase = "https://www.googleapis.com/youtube/v3"
+
+  val youtubeVideoBase = "https://www.youtube.com/watch?v="
+  val youtubeLinkPlaylistBase = "https://www.youtube.com/watch_videos?video_ids="
+
   def youtubeLiteralSearch(literal: String): Either[Throwable, List[Video]] = {
     val apiKey = Credentials.getUnsafeProperty("youtube_api_key")
     val response: HttpResponse[String] =
-      Http("https://www.googleapis.com/youtube/v3/search")
+      Http(s"$youtubeApiBase/search")
         .param("part","snippet")
         .param("q",literal)
         .param("maxResults","10")
@@ -26,7 +31,7 @@ object YoutubeApi {
     for {
       decodedResponse <- decode[YoutubeApiResponse[YoutubeSearchResult]](response.body)
     } yield decodedResponse.items.flatMap(item =>
-      item.id.videoId.map(i => Video(item.snippet.title, s"https://www.youtube.com/watch?v=${i}"))
+      item.id.videoId.map(i => Video(item.snippet.title, s"$youtubeVideoBase$i", i))
     )
   }
 }

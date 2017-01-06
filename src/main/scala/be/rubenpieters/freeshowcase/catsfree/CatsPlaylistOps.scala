@@ -15,7 +15,7 @@ class CatsPlaylistOps[F[_]](implicit I: Inject[PlaylistDsl, F]) {
   def createPlaylist() = Free.inject[PlaylistDsl, F](CreatePlaylist)
   def getPlaylistByName(name: String) = Free.inject[PlaylistDsl, F](GetPlaylistByName(name))
   def getPlaylistByUrl(url: String) = Free.inject[PlaylistDsl, F](GetPlaylistByUrl(url))
-  def addVideo(videoUrl: String, playlist: Playlist) = Free.inject[PlaylistDsl, F](AddVideo(videoUrl, playlist))
+  def addVideo(video: Video, playlist: Playlist) = Free.inject[PlaylistDsl, F](AddVideo(video, playlist))
   def getVideos(playlist: Playlist) = Free.inject[PlaylistDsl, F](GetVideos(playlist))
 }
 
@@ -38,11 +38,11 @@ class TestCatsPlaylistInterp extends (PlaylistDsl ~> Id) {
       Either.fromOption(currentPlaylists.get(name).map(_._1), new PlaylistNotFound)
     case GetPlaylistByUrl(url) =>
       Either.fromOption(currentPlaylists.get(url).map(_._1), new PlaylistNotFound)
-    case AddVideo(videoUrl, playlist) =>
+    case AddVideo(video, playlist) =>
       Either.fromOption(for {
         foundPlaylistWithVideos <- currentPlaylists.get(playlist.url)
         (foundPlaylist, foundVideos) = foundPlaylistWithVideos
-        _ = currentPlaylists.update(foundPlaylist.url, (foundPlaylist, foundVideos :+ videoUrl))
+        _ = currentPlaylists.update(foundPlaylist.url, (foundPlaylist, foundVideos :+ video.url))
       } yield ()
         , new PlaylistNotFound)
     case GetVideos(playlist) =>
