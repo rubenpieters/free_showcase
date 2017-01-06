@@ -1,7 +1,7 @@
 package be.rubenpieters.freeshowcase.catsfree
 
-import cats._
 import be.rubenpieters.freeshowcase.{LiteralSearch, Video, VideoDsl, VideoSearchResult}
+import cats._
 import cats.free.{Free, Inject}
 
 /**

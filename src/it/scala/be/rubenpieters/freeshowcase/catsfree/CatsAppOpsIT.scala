@@ -1,6 +1,7 @@
 package be.rubenpieters.freeshowcase.catsfree
 
 import cats._
+import cats.implicits._
 import cats.arrow.FunctionK
 import org.scalatest.{FlatSpec, Matchers}
 

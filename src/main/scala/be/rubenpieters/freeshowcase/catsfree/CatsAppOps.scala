@@ -21,6 +21,7 @@ class CatsAppOps[F[_]](implicit P: CatsPlaylistOps[F], V: CatsVideoOps[F]) {
 object CatsAppOps {
   type CatsApp[A] = Coproduct[PlaylistDsl, VideoDsl, A]
 
+
   def mkInterp[F[_]](playlistInterp: PlaylistDsl ~> F, videoInterp: VideoDsl ~> F): CatsApp ~> F = {
     val interp: CatsApp ~> F = playlistInterp or videoInterp
     interp

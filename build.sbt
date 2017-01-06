@@ -11,6 +11,7 @@ val circeVersion = "0.6.1"
 
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % "0.8.1"
+  ,"org.atnos" %% "eff" % "2.2.0"
 
   // HTTP
   ,"org.scalaj" %% "scalaj-http" % "2.3.0"
