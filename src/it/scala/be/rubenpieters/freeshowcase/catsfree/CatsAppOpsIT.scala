@@ -15,9 +15,10 @@ class CatsAppOpsIT extends FlatSpec with Matchers {
     val idToRight = λ[FunctionK[Id, Either[Throwable, ?]]](x => Right(x))
     val linkInterp = new CatsPlaylistLinkInterpreter
     val playlistInterp = linkInterp.andThen(idToRight)
-    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp)
+    val musicInterp = new CatsMusicLastfmInterpreter
+    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromLiteralList(List("free monad", "free applicative")).foldMap(interp)
+    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
     println(result)
     result.fold(_ => println("err"), pl => println(linkInterp.playlistByName(pl.url)))
   }
