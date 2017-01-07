@@ -14,7 +14,7 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     val musicInterp = new TestCatsMusicInterp(Map("user" -> List(Track("a", "b"), Track("c", "d"))))
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromLiteralList(List("a - b", "c - d")).foldMap(interp)
+    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
     println(result)
     val videos = new CatsPlaylistOps[PlaylistDsl].getVideos(result).foldMap(playlistInterp)
     println(videos)

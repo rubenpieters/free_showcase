@@ -1,6 +1,6 @@
 package be.rubenpieters.freeshowcase.eff
 
-import be.rubenpieters.freeshowcase.{PlaylistDsl, Video, VideoDsl}
+import be.rubenpieters.freeshowcase._
 import be.rubenpieters.freeshowcase.catsfree.{CatsAppOps, CatsPlaylistOps, TestCatsPlaylistInterp, TestCatsVideoInterp}
 import org.scalatest.{FlatSpec, Matchers}
 import org.atnos.eff._
@@ -12,11 +12,12 @@ import syntax.all._
 class EffAppOpsTest extends FlatSpec with Matchers {
 
   "createPlaylistFromLiteralList" should "correctly create a playlist" in {
-    val searchResultMap = Map("test" -> List("a", "b", "c"), "test2" -> List("1", "2", "3")).mapValues(_.map(i => Video("t", i, i)))
+    val searchResultMap = Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video("t", i, i)))
 
-    val result = EffVideoOps.testRunVideo(searchResultMap)(
+    val result = EffMusicOps.testRunMusic(Map("user" -> List(Track("a", "b"), Track("c", "d"))))(
+      EffVideoOps.testRunVideo(searchResultMap)(
       EffPlaylistOps.testRunPlaylist(
-        EffAppOps.createPlaylistFromLiteralList[Fx.fx2[PlaylistDsl, VideoDsl]](List("test", "test2"))))
+        EffAppOps.createPlaylistFromFavoriteTracks[Fx.fx3[PlaylistDsl, VideoDsl, MusicDsl]]("user"))))
           .run
 
     println(result)
