@@ -7,11 +7,14 @@ scalaVersion := "2.12.1"
 
 scalacOptions ++= Seq("-Ypartial-unification")
 
+resolvers += Resolver.bintrayRepo("projectseptemberinc", "maven")
+
 val circeVersion = "0.6.1"
 
 libraryDependencies ++= Seq(
   "org.typelevel" %% "cats" % "0.8.1"
   ,"org.atnos" %% "eff" % "2.2.0"
+  ,"com.projectseptember" %% "freek" % "0.6.6"
 
   // HTTP
   ,"org.scalaj" %% "scalaj-http" % "2.3.0"
