@@ -10,13 +10,25 @@ import _root_.freek._
   */
 class FreekAppOpsTest extends FlatSpec with Matchers {
 
-  "createPlaylistFromLiteralList" should "correctly create a playlist" in {
+  "createPlaylistFromFavoriteTracks" should "correctly create a playlist" in {
     val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video("t", i, i))))
     val playlistInterp = new TestCatsPlaylistInterp()
     val musicInterp = new TestCatsMusicInterp(Map("user" -> List(Track("a", "b"), Track("c", "d"))))
     val interp = playlistInterp :&: videosInterp :&: musicInterp
 
     val result = FreekAppOps.createPlaylistFromFavoriteTracks("user").interpret(interp)
+    println(result)
+    val videos = new CatsPlaylistOps[PlaylistDsl].getVideos(result).foldMap(playlistInterp)
+    println(videos)
+    videos shouldEqual Right(List("a", "1"))
+  }
+
+  "createPlaylistFromLiteralList" should "correctly create a playlist" in {
+    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video("t", i, i))))
+    val playlistInterp = new TestCatsPlaylistInterp()
+    val interp = playlistInterp :&: videosInterp
+
+    val result = FreekAppOps.createPlaylistFromLiteralList(List("a - b", "c - d")).interpret(interp)
     println(result)
     val videos = new CatsPlaylistOps[PlaylistDsl].getVideos(result).foldMap(playlistInterp)
     println(videos)
