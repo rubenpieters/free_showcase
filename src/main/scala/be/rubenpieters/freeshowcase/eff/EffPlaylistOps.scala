@@ -24,9 +24,7 @@ object EffPlaylistOps {
   def getVideos[R : _playlist](playlist: Playlist) = Eff.send[PlaylistDsl, R, Either[PlaylistDslError, List[String]]](GetVideos(playlist))
 
 
-  def testRunPlaylist[R, A](effects: Eff[R, A])(implicit m: PlaylistDsl <= R): Eff[m.Out, A] = {
-    val currentPlaylists: mutable.Map[String, (Playlist, List[String])] = mutable.Map()
-
+  def testRunPlaylist[R, A](currentPlaylists: mutable.Map[String, (Playlist, List[String])])(effects: Eff[R, A])(implicit m: PlaylistDsl <= R): Eff[m.Out, A] = {
     val sideEffect = new SideEffect[PlaylistDsl] {
       override def apply[X](tx: PlaylistDsl[X]): X = tx match {
         case CreatePlaylist =>

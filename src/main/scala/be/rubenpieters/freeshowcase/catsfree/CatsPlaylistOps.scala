@@ -7,6 +7,7 @@ import cats.free.{Free, Inject}
 import cats.{Id, ~>}
 import cats._
 import cats.implicits._
+import scala.collection.mutable
 
 /**
   * Created by ruben on 5/01/17.
@@ -23,10 +24,7 @@ object CatsPlaylistOps {
   implicit def videoOps[F[_]](implicit I: Inject[PlaylistDsl, F]): CatsPlaylistOps[F] = new CatsPlaylistOps[F]
 }
 
-class TestCatsPlaylistInterp extends (PlaylistDsl ~> Id) {
-  import scala.collection.mutable
-
-  val currentPlaylists: mutable.Map[String, (Playlist, List[String])] = mutable.Map()
+class TestCatsPlaylistInterp(currentPlaylists: mutable.Map[String, (Playlist, List[String])]) extends (PlaylistDsl ~> Id) {
 
   override def apply[A](fa: PlaylistDsl[A]): Id[A] = fa match {
     case CreatePlaylist =>
