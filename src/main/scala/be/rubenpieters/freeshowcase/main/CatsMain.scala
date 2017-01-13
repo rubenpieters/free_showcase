@@ -1,16 +1,15 @@
-package be.rubenpieters.freeshowcase.catsfree
+package be.rubenpieters.freeshowcase.main
 
+import be.rubenpieters.freeshowcase.catsfree.{CatsAppOps, CatsMusicLastfmInterpreter, CatsPlaylistLinkInterpreter, CatsVideoYoutubeInterpreter}
 import cats._
 import cats.implicits._
 import cats.arrow.FunctionK
-import org.scalatest.{FlatSpec, Matchers}
 
 /**
-  * Created by ruben on 6/01/2017.
+  * Created by ruben on 13/01/17.
   */
-class CatsAppOpsIT extends FlatSpec with Matchers {
-
-  "createPlaylistFromLiteralList" should "correctly create a playlist" in {
+object CatsMain {
+  def main(args: Array[String]) = {
     val videosInterp = new CatsVideoYoutubeInterpreter
     val idToRight = λ[FunctionK[Id, Either[Throwable, ?]]](x => Right(x))
     val linkInterp = new CatsPlaylistLinkInterpreter
