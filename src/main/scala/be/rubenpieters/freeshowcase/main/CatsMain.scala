@@ -19,6 +19,6 @@ object CatsMain {
 
     val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
     println(result)
-    result.fold(_ => println("err"), pl => println(linkInterp.playlistByName(pl.url)))
+    result.fold(_ => println("err"), pl => println(linkInterp.playlistByName(pl.id)))
   }
 }

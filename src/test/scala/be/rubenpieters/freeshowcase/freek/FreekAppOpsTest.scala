@@ -21,7 +21,7 @@ class FreekAppOpsTest extends FlatSpec with Matchers {
 
     val result = FreekAppOps.createPlaylistFromFavoriteTracks("user").interpret(interp)
 
-    playlists(result.url)._2 shouldEqual List("a", "1")
+    playlists(result.id)._2 shouldEqual List("a", "1")
   }
 
   "createPlaylistFromLiteralList" should "correctly create a playlist" in {
@@ -32,6 +32,6 @@ class FreekAppOpsTest extends FlatSpec with Matchers {
 
     val result = FreekAppOps.createPlaylistFromLiteralList(List("a - b", "c - d")).interpret(interp)
 
-    playlists(result.url)._2 shouldEqual List("a", "1")
+    playlists(result.id)._2 shouldEqual List("a", "1")
   }
 }

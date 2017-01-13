@@ -19,7 +19,7 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
 
     val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
 
-    playlists(result.url)._2 shouldEqual List("a", "1")
+    playlists(result.id)._2 shouldEqual List("a", "1")
   }
 
 

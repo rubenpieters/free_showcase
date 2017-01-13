@@ -3,7 +3,7 @@ package be.rubenpieters.freeshowcase.eff
 import java.util.UUID
 
 import be.rubenpieters.freeshowcase.unsafe.YoutubeApi
-import be.rubenpieters.freeshowcase.{AddVideo, GetPlaylistByUrl, GetVideos, _}
+import be.rubenpieters.freeshowcase.{AddVideo, GetPlaylistById, GetVideos, _}
 import cats.Traverse
 import org.atnos.eff.interpret._
 import org.atnos.eff.{SideEffect, _}
@@ -24,16 +24,14 @@ object EffPlaylistLinkInterpreter {
       override def apply[X](tx: PlaylistDsl[X]): X = tx match {
         case CreatePlaylist =>
           Playlist(UUID.randomUUID().toString)
-        case GetPlaylistByName(name) =>
-          leftIfNotExists(name, Playlist(name))
-        case GetPlaylistByUrl(url) =>
-          leftIfNotExists(url, Playlist(url))
+        case GetPlaylistById(id) =>
+          leftIfNotExists(id, Playlist(id))
         case AddVideo(video, playlist) =>
-          val result = leftIfNotExists(playlist.url, playlistMap.update(playlist.url, playlistMap.getOrElse(playlist.url, List()) :+ video.videoId))
-          println("current playlist link: " + playlistByName(playlist.url))
+          val result = leftIfNotExists(playlist.id, playlistMap.update(playlist.id, playlistMap.getOrElse(playlist.id, List()) :+ video.videoId))
+          println("current playlist link: " + playlistByName(playlist.id))
           result
         case GetVideos(playlist) =>
-          leftIfNotExists(playlist.url, playlistMap(playlist.url))
+          leftIfNotExists(playlist.id, playlistMap(playlist.id))
       }
 
       def leftIfNotExists[A](name: String, a: A): Either[PlaylistDslError, A] = playlistMap.contains(name) match {

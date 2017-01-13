@@ -19,14 +19,12 @@ class CatsPlaylistLinkInterpreter extends (PlaylistDsl ~> Id) {
   override def apply[A](fa: PlaylistDsl[A]): Id[A] = fa match {
     case CreatePlaylist =>
       Playlist(UUID.randomUUID().toString)
-    case GetPlaylistByName(name) =>
-      leftIfNotExists(name, Playlist(name))
-    case GetPlaylistByUrl(url) =>
-      leftIfNotExists(url, Playlist(url))
+    case GetPlaylistById(id) =>
+      leftIfNotExists(id, Playlist(id))
     case AddVideo(video, playlist) =>
-      leftIfNotExists(playlist.url, playlistMap.update(playlist.url, playlistMap.getOrElse(playlist.url, List()) :+ video.videoId))
+      leftIfNotExists(playlist.id, playlistMap.update(playlist.id, playlistMap.getOrElse(playlist.id, List()) :+ video.videoId))
     case GetVideos(playlist) =>
-      leftIfNotExists(playlist.url, playlistMap(playlist.url))
+      leftIfNotExists(playlist.id, playlistMap(playlist.id))
   }
 
   def leftIfNotExists[A](name: String, a: A): Either[PlaylistDslError, A] = playlistMap.contains(name) match {

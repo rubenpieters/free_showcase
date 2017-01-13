@@ -23,6 +23,6 @@ class EffAppOpsTest extends FlatSpec with Matchers {
         EffAppOps.createPlaylistFromFavoriteTracks[Fx.fx3[PlaylistDsl, VideoDsl, MusicDsl]]("user"))))
           .run
 
-    playlists(result.url)._2 shouldEqual List("a", "1")
+    playlists(result.id)._2 shouldEqual List("a", "1")
   }
 }

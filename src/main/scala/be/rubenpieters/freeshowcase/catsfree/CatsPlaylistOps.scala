@@ -14,8 +14,7 @@ import scala.collection.mutable
   */
 class CatsPlaylistOps[F[_]](implicit I: Inject[PlaylistDsl, F]) {
   def createPlaylist() = Free.inject[PlaylistDsl, F](CreatePlaylist)
-  def getPlaylistByName(name: String) = Free.inject[PlaylistDsl, F](GetPlaylistByName(name))
-  def getPlaylistByUrl(url: String) = Free.inject[PlaylistDsl, F](GetPlaylistByUrl(url))
+  def getPlaylistById(id: String) = Free.inject[PlaylistDsl, F](GetPlaylistById(id))
   def addVideo(video: Video, playlist: Playlist) = Free.inject[PlaylistDsl, F](AddVideo(video, playlist))
   def getVideos(playlist: Playlist) = Free.inject[PlaylistDsl, F](GetVideos(playlist))
 }
@@ -28,22 +27,20 @@ class TestCatsPlaylistInterp(currentPlaylists: mutable.Map[String, (Playlist, Li
 
   override def apply[A](fa: PlaylistDsl[A]): Id[A] = fa match {
     case CreatePlaylist =>
-      val simulatedUrl = UUID.randomUUID().toString
-      val playlist = Playlist(simulatedUrl)
-      currentPlaylists.update(simulatedUrl, (playlist, List()))
+      val simulatedId = UUID.randomUUID().toString
+      val playlist = Playlist(simulatedId)
+      currentPlaylists.update(simulatedId, (playlist, List()))
       playlist
-    case GetPlaylistByName(name) =>
-      Either.fromOption(currentPlaylists.get(name).map(_._1), new PlaylistNotFound)
-    case GetPlaylistByUrl(url) =>
-      Either.fromOption(currentPlaylists.get(url).map(_._1), new PlaylistNotFound)
+    case GetPlaylistById(id) =>
+      Either.fromOption(currentPlaylists.get(id).map(_._1), new PlaylistNotFound)
     case AddVideo(video, playlist) =>
       Either.fromOption(for {
-        foundPlaylistWithVideos <- currentPlaylists.get(playlist.url)
+        foundPlaylistWithVideos <- currentPlaylists.get(playlist.id)
         (foundPlaylist, foundVideos) = foundPlaylistWithVideos
-        _ = currentPlaylists.update(foundPlaylist.url, (foundPlaylist, foundVideos :+ video.url))
+        _ = currentPlaylists.update(foundPlaylist.id, (foundPlaylist, foundVideos :+ video.url))
       } yield ()
         , new PlaylistNotFound)
     case GetVideos(playlist) =>
-      Either.fromOption(currentPlaylists.get(playlist.url).map(_._2), new PlaylistNotFound)
+      Either.fromOption(currentPlaylists.get(playlist.id).map(_._2), new PlaylistNotFound)
   }
 }
