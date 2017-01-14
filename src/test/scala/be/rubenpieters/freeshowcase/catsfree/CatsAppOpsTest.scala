@@ -22,16 +22,16 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     playlists(result.id)._2 shouldEqual List("a b", "c d")
   }
 
-//  "createPlaylistFromLiteralList" should "ignore when a result is not relevant" in {
-//    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
-//    val playlists = mutable.Map[String, (Playlist, List[String])]()
-//    val playlistInterp = new TestCatsPlaylistInterp(playlists)
-//    val musicInterp = new TestCatsMusicInterp(Map("user" -> List(Track("a", "b"), Track("c", "d"))))
-//    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp)
-//
-//    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
-//
-//    playlists(result.id)._2 shouldEqual List()
-//  }
+  "createPlaylistFromLiteralList" should "ignore when a result is not relevant" in {
+    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
+    val playlists = mutable.Map[String, (Playlist, List[String])]()
+    val playlistInterp = new TestCatsPlaylistInterp(playlists)
+    val musicInterp = new TestCatsMusicInterp(Map("user" -> List(Track("a", "b"), Track("c", "d"))))
+    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp)
+
+    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
+
+    playlists(result.id)._2 shouldEqual List()
+  }
 
 }

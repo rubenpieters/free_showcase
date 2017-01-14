@@ -20,7 +20,10 @@ class CatsAppOps[F[_]](implicit P: CatsPlaylistOps[F], V: CatsVideoOps[F], M: Ca
     searchResults <- list.traverseU(r => V.literalSearch(r.mkString(" - ")))
     relevantSearchResults = searchResults.zip(list).map{ case (videoSearchResult, terms) => VideoSearchResult(videoSearchResult.results.filter(t => Video.containsTermsFully(t.title, terms)))}
     newPlaylist <- P.createPlaylist()
-    updatedPlaylist <- relevantSearchResults.traverseU(searchResult => P.addVideo(searchResult.results.head, newPlaylist))
+    updatedPlaylist <- relevantSearchResults.traverseU(searchResult => searchResult.results match {
+      case head :: tail => P.addVideo(head, newPlaylist)
+      case _ => Free.pure[F, Either[PlaylistDslError, Unit]](Right(()))
+    })
   } yield newPlaylist
 }
 
