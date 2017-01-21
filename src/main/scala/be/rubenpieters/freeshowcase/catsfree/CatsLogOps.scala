@@ -1,6 +1,6 @@
 package be.rubenpieters.freeshowcase.catsfree
 
-import be.rubenpieters.freeshowcase.{FavoriteTracksForUser, Log, LogDsl, Track}
+import be.rubenpieters.freeshowcase.{Log, LogDsl}
 import cats._
 import cats.free.{Free, Inject}
 
