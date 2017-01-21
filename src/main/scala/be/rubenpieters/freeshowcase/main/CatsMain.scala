@@ -1,6 +1,6 @@
 package be.rubenpieters.freeshowcase.main
 
-import be.rubenpieters.freeshowcase.catsfree.{CatsAppOps, CatsMusicLastfmInterpreter, CatsPlaylistLinkInterpreter, CatsVideoYoutubeInterpreter}
+import be.rubenpieters.freeshowcase.catsfree._
 import cats._
 import cats.implicits._
 import cats.arrow.FunctionK
@@ -15,7 +15,8 @@ object CatsMain {
     val linkInterp = new CatsPlaylistLinkInterpreter
     val playlistInterp = linkInterp.andThen(idToRight)
     val musicInterp = new CatsMusicLastfmInterpreter
-    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp)
+    val logInterp = (new CatsLogPrintlnInterpreter).andThen(idToRight)
+    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp)
 
     val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
     println(result)

@@ -25,8 +25,8 @@ object YoutubeApi {
         .param("key", apiKey)
         .asString
     // TODO: check response.statusLine and return an error if it isn't 200
-    println("Response: --")
-    println(response.body)
+//    println("Response: --")
+//    println(response.body)
     for {
       decodedResponse <- decode[YoutubeApiResponse[YoutubeSearchResult]](response.body)
     } yield decodedResponse.items.flatMap(item =>

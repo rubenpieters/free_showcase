@@ -17,6 +17,6 @@ object CatsLogOps {
 
 class TestCatsLogInterp extends (LogDsl ~> Id) {
   override def apply[A](fa: LogDsl[A]): Id[A] = fa match {
-    case Log(msg) => println(msg)
+    case Log(msg) => ()
   }
 }
