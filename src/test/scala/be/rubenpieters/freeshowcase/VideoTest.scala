@@ -17,4 +17,19 @@ class VideoTest extends FlatSpec with Matchers {
 
     Video.containsTermsFully(title, List("ab def", "ghi")) shouldBe false
   }
+
+  "applyMetric" should "return most relevant search at the head for case 1" in {
+    val searchResults = List(
+      "Lantlôs - Pulse/Surreal"
+      ,"Lantlos Pulse/Surreal Summerbreeze 2015"
+      ,"Lantlôs - \"Pulse/Surreal\""
+      ,"Lantlôs - Pulse/Surreal (Vocal Cover)"
+      ,"Lantlôs - Intrauterin (with Neige) || live @ Patronaat / Roadburn || 18-04-2013"
+      ,"Lantlôs - Pulse Surreal - Violão Cover - Introdução"
+      ,"Lantlôs - White Miasma Subtitulado Español"
+      ,"Lantlôs - Coma"
+    ).map(Video(_, "", ""))
+
+    Video.applyMetric("Lantlôs - Pulse/Surreal", searchResults).headOption shouldEqual Some(Video("Lantlôs - Pulse/Surreal", "", ""))
+  }
 }

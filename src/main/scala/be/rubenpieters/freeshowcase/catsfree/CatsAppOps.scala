@@ -19,7 +19,7 @@ class CatsAppOps[F[_]](implicit P: CatsPlaylistOps[F], V: CatsVideoOps[F], M: Ca
   def createPlaylistFromLiteralList(list: List[List[String]]): Free[F, Playlist] = for {
     searchResults <- list.traverseU(r => V.literalSearch(r.mkString(" - ")))
     _ <- searchResults.traverseU_(r => r.results.traverseU_(v => L.log(s"received search result: ${v.title}")))
-    relevantSearchResults = searchResults.zip(list).map{ case (videoSearchResult, terms) => VideoSearchResult(videoSearchResult.results.filter(t => Video.containsTermsFully(t.title, terms)))}
+    relevantSearchResults = searchResults.zip(list).map{ case (videoSearchResult, terms) => VideoSearchResult(Video.applyMetric(terms.mkString(" - "), videoSearchResult.results))}
     newPlaylist <- P.createPlaylist()
     _ <- relevantSearchResults.traverseU_(r => r.results.traverseU_(v => L.log(s"kept relevant result: ${v.title}")))
     updatedPlaylist <- relevantSearchResults.traverseU(searchResult => searchResult.results match {

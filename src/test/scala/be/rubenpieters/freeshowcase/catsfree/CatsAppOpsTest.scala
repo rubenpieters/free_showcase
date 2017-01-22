@@ -11,7 +11,7 @@ import scala.collection.mutable
 class CatsAppOpsTest extends FlatSpec with Matchers {
 
   "createPlaylistFromLiteralList" should "correctly create a playlist" in {
-    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a b", "b", "c"), "c - d" -> List("c d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
+    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a - b", "b", "c"), "c - d" -> List("c - d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
     val playlistInterp = new TestCatsPlaylistInterp(playlists)
     val musicInterp = new TestCatsMusicInterp(Map("user" -> List(Track("a", "b"), Track("c", "d"))))
@@ -20,7 +20,7 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
 
     val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
 
-    playlists(result.id)._2 shouldEqual List("a b", "c d")
+    playlists(result.id)._2 shouldEqual List("a - b", "c - d")
   }
 
   "createPlaylistFromLiteralList" should "ignore when a result is not relevant" in {

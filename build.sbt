@@ -19,6 +19,9 @@ libraryDependencies ++= Seq(
   ,"io.monix" %% "monix" % monixVersion
   ,"io.monix" %% "monix-cats" % monixVersion
 
+  // String similarity
+  ,"com.github.mpkorstanje" % "simmetrics-core" % "4.1.1"
+
   // HTTP
   ,"org.scalaj" %% "scalaj-http" % "2.3.0"
 
