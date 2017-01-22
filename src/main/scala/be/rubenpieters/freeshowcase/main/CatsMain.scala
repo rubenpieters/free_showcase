@@ -16,9 +16,11 @@ object CatsMain {
     val playlistInterp = linkInterp.andThen(idToRight)
     val musicInterp = new CatsMusicLastfmInterpreter
     val logInterp = (new CatsLogPrintlnInterpreter).andThen(idToRight)
-    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp)
+    val setlistInterp = new CatsSetlistFmInterpreter
+    val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp, setlistInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
+//    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
+    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromArtistSetlist("Lantlôs").foldMap(interp)
     println(result)
     result.fold(_ => println("err"), pl => println(linkInterp.playlistByName(pl.id)))
   }
