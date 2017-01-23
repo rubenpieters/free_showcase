@@ -4,6 +4,7 @@ import be.rubenpieters.freeshowcase.Track
 import io.circe._
 import io.circe.generic.auto._
 import io.circe.parser._
+import cats.syntax.either._
 
 import scalaj.http.{Http, HttpResponse}
 
@@ -20,16 +21,22 @@ object SetlistfmApi {
       .param("artistName",artist)
       .asString
     // TODO: check response.statusLine and return an error if it isn't 200
-    println("Response: --")
-    println(response.body)
+//    println("Response: --")
+//    println(response.body)
     for {
     // TODO: look for a cleaner way to handle "sets":"", output from the setlistfm API
       decodedResponse <- decode[SetlistfmResponse](response.body.replaceAll("\"sets\":\"\",", ""))
     } yield (for {
       sl <- decodedResponse.setlists.setlist
       sets <- sl.sets.toIterable
-      set <- sets.set
-      song <- set.song
+      set <- sets.set match {
+        case Left(a) => List(a)
+        case Right(a) => a
+      }
+      song <- set.song match {
+        case Left(a) => List(a)
+        case Right(a) => a
+      }
     } yield song
       )
       .map(s => Track(artist, s.`@name`))
@@ -41,8 +48,24 @@ case class SetlistfmResponse(setlists: SetlistfmInnerResponse)
 case class SetlistfmInnerResponse(setlist: List[SetlistfmSetlist])
 case class SetlistfmSetlist(`@eventDate`: String, artist: SetlistfmArtist, sets: Option[SetlistfmSets])
 case class SetlistfmArtist(`@name`: String)
-case class SetlistfmSets(set: List[SetlistfmSet])
-case class SetlistfmSet(song: List[SetlistfmSetSong])
+case class SetlistfmSets(set: Either[SetlistfmSet, List[SetlistfmSet]])
+
+object SetlistfmSets {
+  implicit val decodeTestA: Decoder[SetlistfmSets] =
+    Decoder[SetlistfmSet].map(Left(_)).or(
+      Decoder[List[SetlistfmSet]].map(Right(_): Either[SetlistfmSet, List[SetlistfmSet]])
+    ).prepare(_.downField("set")).map(SetlistfmSets(_))
+}
+
+case class SetlistfmSet(song: Either[SetlistfmSetSong, List[SetlistfmSetSong]])
+
+object SetlistfmSet {
+  implicit val decodeTestA: Decoder[SetlistfmSet] =
+    Decoder[SetlistfmSetSong].map(Left(_)).or(
+      Decoder[List[SetlistfmSetSong]].map(Right(_): Either[SetlistfmSetSong, List[SetlistfmSetSong]])
+    ).prepare(_.downField("song")).map(SetlistfmSet(_))
+}
+
 case class SetlistfmSetSong(`@name`: String)
 
 object Test extends App {
