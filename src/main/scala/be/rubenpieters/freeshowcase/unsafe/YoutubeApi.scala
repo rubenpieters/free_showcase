@@ -19,7 +19,7 @@ object YoutubeApi {
   val youtubeVideoBase = "https://www.youtube.com/watch?v="
   val youtubeLinkPlaylistBase = "https://www.youtube.com/watch_videos?video_ids="
 
-  val apiKey = Credentials.getUnsafeProperty("youtube_api_key")
+  lazy val apiKey = Credentials.getUnsafeProperty("youtube_api_key")
 
   val youtubeSearchHttp = Http(s"$youtubeApiBase/search")
     .param("part", "snippet")
