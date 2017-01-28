@@ -1,0 +1,342 @@
+{
+ "kind": "youtube#searchListResponse",
+ "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/k8UvQrdiQyhc2-DyfAq5EP4ZfgQ\"",
+ "nextPageToken": "CAoQAA",
+ "regionCode": "BE",
+ "pageInfo": {
+  "totalResults": 34122,
+  "resultsPerPage": 10
+ },
+ "items": [
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/CljfZm7qP8m9cDQJpZZ-JAiMTek\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "U0lK0hnbc4U"
+   },
+   "snippet": {
+    "publishedAt": "2016-06-17T07:19:59.000Z",
+    "channelId": "UCOHg8YCiyMVRRxb3mJT_0Mg",
+    "title": "Why the free Monad isn't free - by Kelley Robinson",
+    "description": "This talk was recorded at Scala Days New York, 2016. Follow along on Twitter @scaladays and on the website for more information http://scaladays.org/.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/U0lK0hnbc4U/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/U0lK0hnbc4U/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/U0lK0hnbc4U/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Scala Days Conferences",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/AHQ1YWc7Cd5M7U5y9ybeERdpyU4\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "T4956GI-6Lw"
+   },
+   "snippet": {
+    "publishedAt": "2015-09-30T22:59:58.000Z",
+    "channelId": "UCKvhw2CPR-0S4XZ1bNlihnw",
+    "title": "SBTB 2015: David Hoyt, Drinking the Free Kool-Aid",
+    "description": "Put your abstract algebra knowledge to work for you by leveraging free monads, coproducts, and interpreters to separate concerns and create a compelling ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/T4956GI-6Lw/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/T4956GI-6Lw/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/T4956GI-6Lw/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "FunctionalTV",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/X4KJvoeq_vzQXPXjf2GBoJneRq0\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "fU8eKoakd6o"
+   },
+   "snippet": {
+    "publishedAt": "2015-01-22T08:59:22.000Z",
+    "channelId": "UCAvGvvEemkeX8hurdPXr7hA",
+    "title": "YOW! Lambda Jam 2014 - Run free with the monads: Free Monads for fun and profit - Ken Scrambler",
+    "description": "Free monads are a powerful technique that among other things, can separate the pure representation of code from its interpretation. The representation can be ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/fU8eKoakd6o/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/fU8eKoakd6o/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/fU8eKoakd6o/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "YOW! Australia",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/PutykzYP0BKo8YZSNW8Wwg40dlk\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "20WVE3bkYrQ"
+   },
+   "snippet": {
+    "publishedAt": "2016-07-21T10:29:32.000Z",
+    "channelId": "UC-WICcSW1k3HsScuXxDrp0w",
+    "title": "Kelley Robinson - Why The Free Monad isn't Free - Curry On",
+    "description": "Curry On, Rome July 18th 2016. http://curry-on.org.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/20WVE3bkYrQ/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/20WVE3bkYrQ/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/20WVE3bkYrQ/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Curry On!",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/WYmnzzLXcFFI8Nmx9sV_12D9kKs\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "rK53C-xyPWw"
+   },
+   "snippet": {
+    "publishedAt": "2016-05-14T08:00:09.000Z",
+    "channelId": "UC-CzKrmtV55SlW2eL3k1RRQ",
+    "title": "A Year living Freely - Chris Myers",
+    "description": "The Free monad and the Interpreter Pattern has gained significant interest in the Scala community of late. It is a pattern that has helped unlock the problems of ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/rK53C-xyPWw/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/rK53C-xyPWw/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/rK53C-xyPWw/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Typelevel",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/azK3zcCeuWjM6-TGRXUraA2Oyhw\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "cOjmaFbnsyY"
+   },
+   "snippet": {
+    "publishedAt": "2016-10-04T04:38:52.000Z",
+    "channelId": "UCwRL68qZFfub1Ep1EScfmBw",
+    "title": "3 13  String Diagrams for Free Monads",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/cOjmaFbnsyY/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/cOjmaFbnsyY/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/cOjmaFbnsyY/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "ICFP Video",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/iMOuZXFZj0v1lmxfVMMerVCAOtI\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "H28QqxO7Ihc"
+   },
+   "snippet": {
+    "publishedAt": "2016-01-11T10:31:00.000Z",
+    "channelId": "UCc0j7uOItUDh7vEvPb-TeCg",
+    "title": "Move Over Free Monads: Make Way for Free Applicatives! — John de Goes",
+    "description": "In the Scala FP community, free monads are one of the fastest growing and hottest ways to compose programs from small, modular, interpretable languages.",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/H28QqxO7Ihc/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/H28QqxO7Ihc/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/H28QqxO7Ihc/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Scala World",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/rzTjN_VgLiBta9SLAYPCGm_5l-A\"",
+   "id": {
+    "kind": "youtube#playlist",
+    "playlistId": "PLK_hdtAJ4KqUWp5LJdLOgkD_8qKW0iAHi"
+   },
+   "snippet": {
+    "publishedAt": "2016-02-27T18:46:37.000Z",
+    "channelId": "UCKjVLbSDoM-8-eEM7A30igA",
+    "title": "Free Monads",
+    "description": "",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/WH5BrkzGgQY/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/WH5BrkzGgQY/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/WH5BrkzGgQY/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Brian Lonsdorf",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/04TDSQjE-By9c_ASRoKfzm1TJNM\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "M258zVn4m2M"
+   },
+   "snippet": {
+    "publishedAt": "2016-01-04T11:46:28.000Z",
+    "channelId": "UCwqC1-y3uk5Zfg6F5S_PcVw",
+    "title": "Composable application architecture with reasonably priced monads",
+    "description": "Most of us have an experience of functional programming that is isolated to small libraries or specific immutable data structures. But can we design our entire ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/M258zVn4m2M/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/M258zVn4m2M/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/M258zVn4m2M/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "Parleys",
+    "liveBroadcastContent": "none"
+   }
+  },
+  {
+   "kind": "youtube#searchResult",
+   "etag": "\"gMxXHe-zinKdE9lTnzKu8vjcmDI/KYuVpuVyxvt_xu3fZXHdto1_lFk\"",
+   "id": {
+    "kind": "youtube#video",
+    "videoId": "KGJLeHhsZBo"
+   },
+   "snippet": {
+    "publishedAt": "2016-06-06T14:07:53.000Z",
+    "channelId": "UCDHLL2QvdpCytAfBiwUeKgg",
+    "title": "The Eff monad, one monad to rule them all by Eric Torreborre at Scalar Conf 2016:",
+    "description": "The Eff monad, one monad to rule them all by Eric Torreborre @ Scalar Conf 2016 Monad transformers are a neat way to compose effectul computations: pass ...",
+    "thumbnails": {
+     "default": {
+      "url": "https://i.ytimg.com/vi/KGJLeHhsZBo/default.jpg",
+      "width": 120,
+      "height": 90
+     },
+     "medium": {
+      "url": "https://i.ytimg.com/vi/KGJLeHhsZBo/mqdefault.jpg",
+      "width": 320,
+      "height": 180
+     },
+     "high": {
+      "url": "https://i.ytimg.com/vi/KGJLeHhsZBo/hqdefault.jpg",
+      "width": 480,
+      "height": 360
+     }
+    },
+    "channelTitle": "SoftwareMill",
+    "liveBroadcastContent": "none"
+   }
+  }
+ ]
+}
