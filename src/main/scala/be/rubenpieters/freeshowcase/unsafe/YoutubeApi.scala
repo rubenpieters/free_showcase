@@ -21,7 +21,7 @@ object YoutubeApi {
 
   lazy val apiKey = Credentials.getUnsafeProperty("youtube_api_key")
 
-  val youtubeSearchHttp = Http(s"$youtubeApiBase/search")
+  lazy val youtubeSearchHttp = Http(s"$youtubeApiBase/search")
     .param("part", "snippet")
     .param("maxResults", "10")
     .param("key", apiKey)
