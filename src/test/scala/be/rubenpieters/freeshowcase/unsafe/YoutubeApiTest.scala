@@ -1,5 +1,6 @@
 package be.rubenpieters.freeshowcase.unsafe
 
+import be.rubenpieters.freeshowcase.util.json.FieldNotFound
 import be.rubenpieters.freeshowcase.{TestSpec, Video}
 
 /**
@@ -22,6 +23,12 @@ class YoutubeApiTest extends TestSpec {
         , Video("The Eff monad, one monad to rule them all by Eric Torreborre at Scalar Conf 2016:","https://www.youtube.com/watch?v=KGJLeHhsZBo","KGJLeHhsZBo")
       )
     }
+  }
+
+  "parseYoutubeApiJson" should "give appropriate error when items" in {
+    val errorJson = "{}"
+
+    YoutubeApi.parseYoutubeApiJson(errorJson) shouldEqual Left(FieldNotFound("items"))
   }
 
   "parseYoutubeApiJson" should "currently silently ignore unparseable items" in {
