@@ -31,7 +31,7 @@ object CirceUtils {
     }
 
     implicit class UnparsedNelOps[A](list: NonEmptyList[Either[JsonReadError, A]]) {
-      def ignoreSilently = list.toList.flatMap(_.toOption)
+      def ignoreSilently = list.toList.ignoreSilently
     }
   }
 }
