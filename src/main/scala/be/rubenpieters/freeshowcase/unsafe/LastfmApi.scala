@@ -1,11 +1,13 @@
 package be.rubenpieters.freeshowcase.unsafe
 
-import be.rubenpieters.freeshowcase.{Track, Video}
+import be.rubenpieters.freeshowcase.Track
+import be.rubenpieters.freeshowcase.util.UtilImplicits._
+import be.rubenpieters.freeshowcase.util.json.JsonReadError
 import io.circe._
-import io.circe.generic.auto._
+import io.circe.optics.JsonPath._
 import io.circe.parser._
 
-import scalaj.http.{Http, HttpResponse}
+import scalaj.http.Http
 
 /**
   * Created by ruben on 7/01/17.
@@ -13,28 +15,53 @@ import scalaj.http.{Http, HttpResponse}
 object LastfmApi {
   val lastfmApiBase = "http://ws.audioscrobbler.com/2.0/?"
 
-  def lastfmUserLovedTracks(user: String) = {
-    //method=user.getlovedtracks&user=rj&api_key=YOUR_API_KEY&format=json
-    val apiKey = Credentials.getUnsafeProperty("last_fm_api_key")
-    val response: HttpResponse[String] =
-      Http(s"$lastfmApiBase/search")
-        .param("method","user.getlovedtracks")
-        .param("user",user)
-        .param("api_key",apiKey)
-        .param("format", "json")
-        .asString
-    // TODO: check response.statusLine and return an error if it isn't 200
-//    println("Response: --")
-//    println(response.body)
-    for {
-      decodedResponse <- decode[LastfmLovedTracks](response.body)
-    } yield decodedResponse.lovedtracks.track.map(tr =>
-      Track(tr.artist.name, tr.name)
-    )
-  }
-}
+  lazy val apiKey = Credentials.getUnsafeProperty("last_fm_api_key")
 
-case class LastfmLovedTracks(lovedtracks: LastfmTrackList)
-case class LastfmTrackList(track: List[LastfmTrack])
-case class LastfmTrack(name: String, artist: LastfmArtist)
-case class LastfmArtist(name: String)
+  lazy val lastfmSearchHttp = Http(s"$lastfmApiBase/search")
+    .param("api_key",apiKey)
+    .param("format", "json")
+
+  def lastfmUserLovedTracksHttp(user: String) = lastfmSearchHttp
+    .param("method", "user.getlovedtracks")
+    .param("user", user)
+
+  def lastfmUserLovedTracks(user: String) =
+    lastfmUserLovedTracksHttp(user)
+      .doRequest
+      .flatMap(parseLastfmApiJson)
+  /*
+  json sample:
+  {
+    "lovedtracks":{
+      "track":[
+        {
+          "name":"Pulse/Surreal",
+          ...,
+          "artist":{
+            "name":"Lantlôs",
+            ...
+          },
+          ...
+        },
+        ...
+      ],
+      ...
+    }
+  }
+  */
+  val tracks = root.lovedtracks.track.each
+  def parseLastfmApiJson(json: String) =
+    for {
+      parsedJson <- parse(json)
+      parsedTracks <- tracks.json.getAllEither(parsedJson, "lovedtracks.track")
+    } yield {
+      val parsedTrackTuples = parsedTracks.map(getTrackTuple).ignoreSilently
+      parsedTrackTuples.map{ case (artist, track) => Track(artist, track) }
+    }
+
+  def getTrackTuple(itemJson: Json): Either[JsonReadError, (String, String)] =
+    for {
+      trackName <- root.name.string.getEither(itemJson, "lovedtracks.track.name")
+      artistName <- root.artist.name.string.getEither(itemJson, "lovedtracks.track.artist.name")
+    } yield (artistName, trackName)
+}

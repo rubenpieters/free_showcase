@@ -37,7 +37,11 @@ class SetlistfmApiTest extends TestSpec {
         |  }
       """.stripMargin
 
-    println(SetlistfmApi.parseSetlistfmApiJson(json))
+    inside(SetlistfmApi.parseSetlistfmApiJson(json)) { case Right(list) =>
+      list should contain theSameElementsAs List(
+        "Coma", "Melting Sun I: Azure Chimes"
+      )
+    }
   }
 
   "parseSetlistfmApiJson" should "parse simple example with empty `sets` correctly" in {
@@ -72,10 +76,26 @@ class SetlistfmApiTest extends TestSpec {
         |  }
       """.stripMargin
 
-    println(SetlistfmApi.parseSetlistfmApiJson(json))
+    inside(SetlistfmApi.parseSetlistfmApiJson(json)) { case Right(list) =>
+      list should contain theSameElementsAs List(
+        "Coma", "Melting Sun I: Azure Chimes"
+      )
+    }
   }
 
   "parseSetlistfmApiJson" should "parse sample 1 correctly" in {
-    println(SetlistfmApi.parseSetlistfmApiJson(setlistfmApiSample1))
+    inside(SetlistfmApi.parseSetlistfmApiJson(setlistfmApiSample1)) { case Right(list) =>
+      List("Intrauterin"
+        , "Melting Sun I: Azure Chimes"
+        , "Melting Sun II: Cherry Quartz"
+        , "Melting Sun IV: Jade Fields"
+        , "Bliss"
+        , "Coma"
+        , "Melting Sun III: Aquamarine Towers"
+        , "Pulse/Surreal"
+        , "Bloody Lips And Paper Skin"
+      )
+      list.size shouldBe 9
+    }
   }
 }

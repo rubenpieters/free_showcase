@@ -86,6 +86,7 @@ object SetlistfmApi {
     } yield {
       song.map(s => root.`@name`.string.getEither(s, "setlists.setlist.sets.set.song.@name"))
         .ignoreSilently
+        .distinct
     }
   }
 }
