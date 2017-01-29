@@ -15,7 +15,7 @@ object Credentials {
 
   def getUnsafeProperty(property: String): String = {
     val properties = new Properties()
-    val credentialsIS = getClass.getClassLoader.getResourceAsStream("credentialsx")
+    val credentialsIS = getClass.getClassLoader.getResourceAsStream("credentials")
     properties.load(credentialsIS)
     properties.getProperty(property)
   }
