@@ -20,7 +20,7 @@ object CatsMain {
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp, setlistInterp)
 
 //    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("rubenpieters").foldMap(interp)
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromArtistSetlist("Lantlôs").foldMap(interp)
+    val result = CatsAppOps.createPlaylistFromArtistSetlist[CatsAppOps.CatsApp]("Lantlôs").foldMap(interp)
     println(result)
     result.fold(_ => println("err"), pl => println(linkInterp.playlistByName(pl.id)))
   }

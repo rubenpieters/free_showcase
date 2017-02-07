@@ -9,8 +9,19 @@ import scala.collection.mutable
   * Created by ruben on 5/01/17.
   */
 class CatsAppOpsTest extends FlatSpec with Matchers {
+  "createPlaylistFromLiteralList" should "create the playlist from literal terms" in {
+    val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a - b", "b", "c"), "c - d" -> List("c - d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
+    val playlists = mutable.Map[String, (Playlist, List[String])]()
+    val playlistInterp = new TestCatsPlaylistInterp(playlists)
+    val logInterp = new TestCatsLogInterp
+    val interp = CatsAppOps.mkPlaylistVideoLogInterp(playlistInterp, videosInterp, logInterp)
 
-  "createPlaylistFromLiteralList" should "correctly create the playlist" in {
+    val result = CatsAppOps.createPlaylistFromLiteralList[CatsAppOps.PlaylistVideoLogApp](List(List("a", "b"), List("c", "d"))).foldMap(interp)
+
+    playlists(result.id)._2 shouldEqual List("a - b", "c - d")
+  }
+
+  "createPlaylistFromFavoriteTracks" should "correctly create the playlist" in {
     val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a - b", "b", "c"), "c - d" -> List("c - d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
     val playlistInterp = new TestCatsPlaylistInterp(playlists)
@@ -19,12 +30,12 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     val setlistInterp = new TestCatsSetlistInterp(Map())
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp, setlistInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
+    val result = CatsAppOps.createPlaylistFromFavoriteTracks[CatsAppOps.CatsApp]("user").foldMap(interp)
 
     playlists(result.id)._2 shouldEqual List("a - b", "c - d")
   }
 
-  "createPlaylistFromLiteralList" should "ignore when a result is not relevant" in {
+  "createPlaylistFromFavoriteTracks" should "ignore when a result is not relevant" in {
     val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a", "b", "c"), "c - d" -> List("1", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
     val playlistInterp = new TestCatsPlaylistInterp(playlists)
@@ -33,7 +44,7 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     val setlistInterp = new TestCatsSetlistInterp(Map())
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp, setlistInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromFavoriteTracks("user").foldMap(interp)
+    val result = CatsAppOps.createPlaylistFromFavoriteTracks[CatsAppOps.CatsApp]("user").foldMap(interp)
 
     playlists(result.id)._2 shouldEqual List()
   }
@@ -47,7 +58,7 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     val setlistInterp = new TestCatsSetlistInterp(Map("artist" -> List(Track("artist", "song1"), Track("artist", "song2"))))
     val interp = CatsAppOps.mkInterp(playlistInterp, videosInterp, musicInterp, logInterp, setlistInterp)
 
-    val result = new CatsAppOps[CatsAppOps.CatsApp].createPlaylistFromArtistSetlist("artist").foldMap(interp)
+    val result = CatsAppOps.createPlaylistFromArtistSetlist[CatsAppOps.CatsApp]("artist").foldMap(interp)
 
     playlists(result.id)._2 shouldEqual List("artist - song1", "artist - song2")
   }
