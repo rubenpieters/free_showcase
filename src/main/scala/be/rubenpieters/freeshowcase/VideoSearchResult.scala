@@ -15,7 +15,7 @@ import org.simmetrics.tokenizers.Tokenizers
   */
 case class VideoSearchResult(results: List[Video])
 
-case class Video(title: String, url: String, videoId: String)
+case class Video(title: VideoTitle, url: VideoUrl, videoId: VideoId)
 
 object Video {
   val similarityThreshold = 0.8f
@@ -30,11 +30,11 @@ object Video {
       .simplify(accentNormalizer)
       .build()
 
-  def containsTermsFully(title: String, terms: List[String]): Boolean = {
+  def containsTermsFully(title: VideoTitle, terms: SearchTerms): Boolean = {
     ! terms.exists(term => ! title.contains(term))
   }
 
-  def applyMetric(searchTerm: String, searchResultTitles: List[Video]): List[Video] = {
+  def applyMetric(searchTerm: SearchLiteral, searchResultTitles: List[Video]): List[Video] = {
     searchResultTitles
       .map(t => (t, metric.compare(t.title, searchTerm)))
       .filter{ case (t, m) => m >= similarityThreshold}

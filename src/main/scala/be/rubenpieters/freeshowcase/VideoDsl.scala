@@ -7,5 +7,5 @@ import cats.free.Inject
   */
 sealed trait VideoDsl[A]
 
-case class LiteralSearch(literal: String) extends VideoDsl[VideoSearchResult]
+case class LiteralSearch(literal: SearchLiteral) extends VideoDsl[VideoSearchResult]
 

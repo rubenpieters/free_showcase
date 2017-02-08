@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   ,"com.projectseptember" %% "freek" % "0.6.6"
   ,"io.monix" %% "monix" % monixVersion
   ,"io.monix" %% "monix-cats" % monixVersion
+  ,"com.github.mpilquist" %% "simulacrum" % "0.10.0"
 
   // String similarity
   ,"com.github.mpkorstanje" % "simmetrics-core" % "4.1.1"
@@ -36,3 +37,4 @@ libraryDependencies ++= Seq(
 
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)

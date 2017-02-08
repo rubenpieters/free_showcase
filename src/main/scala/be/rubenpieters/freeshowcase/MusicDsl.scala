@@ -5,5 +5,5 @@ package be.rubenpieters.freeshowcase
   */
 sealed trait MusicDsl[A]
 
-case class FavoriteTracksForUser(user: String) extends MusicDsl[List[Track]]
+case class FavoriteTracksForUser(user: UserName) extends MusicDsl[List[Track]]
 

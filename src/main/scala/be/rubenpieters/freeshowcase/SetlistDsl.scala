@@ -5,4 +5,4 @@ package be.rubenpieters.freeshowcase
   */
 sealed trait SetlistDsl[A]
 
-case class GetSetlistTracksForArtist(artist: String) extends SetlistDsl[List[Track]]
+case class GetSetlistTracksForArtist(artist: ArtistName) extends SetlistDsl[List[Track]]

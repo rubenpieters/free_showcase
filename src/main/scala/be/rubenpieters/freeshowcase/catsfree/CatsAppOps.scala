@@ -5,23 +5,24 @@ import cats.implicits._
 import be.rubenpieters.freeshowcase._
 import cats.data.Coproduct
 import cats.free.Free
+import be.rubenpieters.freeshowcase.Searchable.ops._
 
 /**
   * Created by ruben on 5/01/17.
   */
 object CatsAppOps {
-  def createPlaylistFromFavoriteTracks[F[_]](user: String)(implicit
+  def createPlaylistFromFavoriteTracks[F[_]](user: UserName)(implicit
                                                            P: CatsPlaylistOps[F]
                                                            , V: CatsVideoOps[F]
                                                            , M: CatsMusicOps[F]
                                                            , S: CatsSetlistOps[F]
   ): Free[F, Playlist] = for {
     tracks <- M.favoriteTracksForUser(user)
-    trackSearchTerms = tracks.map(track => List(track.artist, track.title))
+    trackSearchTerms = tracks.map(track => track.asSearchTerms)
     playlist <- createPlaylistFromLiteralList(trackSearchTerms)
   } yield playlist
 
-  def createPlaylistFromArtistSetlist[F[_]](artist: String)(implicit
+  def createPlaylistFromArtistSetlist[F[_]](artist: ArtistName)(implicit
                                                             P: CatsPlaylistOps[F]
                                                             , V: CatsVideoOps[F]
                                                             , M: CatsMusicOps[F]
@@ -32,7 +33,7 @@ object CatsAppOps {
     playlist <- createPlaylistFromLiteralList(trackSearchTerms)
   } yield playlist
 
-  def createPlaylistFromLiteralList[F[_]](list: List[List[String]])(implicit
+  def createPlaylistFromLiteralList[F[_]](list: List[SearchTerms])(implicit
                                                                     P: CatsPlaylistOps[F]
                                                                     , V: CatsVideoOps[F]
   ): Free[F, Playlist] = for {
