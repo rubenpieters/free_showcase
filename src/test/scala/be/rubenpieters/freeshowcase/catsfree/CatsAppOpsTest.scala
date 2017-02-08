@@ -1,6 +1,6 @@
 package be.rubenpieters.freeshowcase.catsfree
 
-import be.rubenpieters.freeshowcase.{Playlist, PlaylistDsl, Track, Video}
+import be.rubenpieters.freeshowcase._
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.collection.mutable
@@ -8,7 +8,7 @@ import scala.collection.mutable
 /**
   * Created by ruben on 5/01/17.
   */
-class CatsAppOpsTest extends FlatSpec with Matchers {
+class CatsAppOpsTest extends TestSpec {
   "createPlaylistFromLiteralList" should "create the playlist from literal terms" in {
     val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a - b", "b", "c"), "c - d" -> List("c - d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
