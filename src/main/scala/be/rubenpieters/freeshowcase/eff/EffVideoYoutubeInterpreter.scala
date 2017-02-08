@@ -22,7 +22,7 @@ object EffVideoYoutubeInterpreter {
     val _translate = new Translate[VideoDsl, U] {
       override def apply[X](kv: VideoDsl[X]): Eff[U, X] = kv match {
         case LiteralSearch(literal) =>
-          val searchResult = YoutubeApi.youtubeLiteralSearch(literal).map(VideoSearchResult)
+          val searchResult = YoutubeApi.youtubeLiteralSearch(literal).map(VideoSearchResult(_))
           send[VideoError, U, VideoSearchResult](searchResult)
 
       }

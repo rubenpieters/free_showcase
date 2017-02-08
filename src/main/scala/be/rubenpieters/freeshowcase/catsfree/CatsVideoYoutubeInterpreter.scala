@@ -10,6 +10,6 @@ import cats.~>
 class CatsVideoYoutubeInterpreter extends (VideoDsl ~> Either[Throwable, ?]) {
   override def apply[A](fa: VideoDsl[A]): Either[Throwable, A] = fa match {
     case LiteralSearch(literal) =>
-      YoutubeApi.youtubeLiteralSearch(literal).map(VideoSearchResult)
+      YoutubeApi.youtubeLiteralSearch(literal).map(VideoSearchResult(_))
   }
 }

@@ -9,13 +9,13 @@ import scala.collection.mutable
   * Created by ruben on 5/01/17.
   */
 class CatsAppOpsTest extends FlatSpec with Matchers {
-  "createPlaylistFromLiteralList" should "create the playlist from literal terms" in {
+  "createPlaylistFromSearchableList" should "create the playlist from literal terms" in {
     val videosInterp = new TestCatsVideoInterp(Map("a - b" -> List("a - b", "b", "c"), "c - d" -> List("c - d", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
     val playlistInterp = new TestCatsPlaylistInterp(playlists)
     val interp = CatsAppOps.mkPlaylistVideoLogInterp(playlistInterp, videosInterp)
 
-    val result = CatsAppOps.createPlaylistFromLiteralList[CatsAppOps.PlaylistVideoApp](List(List("a", "b"), List("c", "d"))).foldMap(interp)
+    val result = CatsAppOps.createPlaylistFromSearchableList[CatsAppOps.PlaylistVideoApp, Track](List(Track("a", "b"), Track("c", "d"))).foldMap(interp)
 
     playlists(result.id)._2 shouldEqual List("a - b", "c - d")
   }

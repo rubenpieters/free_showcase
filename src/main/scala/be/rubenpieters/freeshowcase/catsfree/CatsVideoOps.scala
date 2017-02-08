@@ -1,8 +1,9 @@
 package be.rubenpieters.freeshowcase.catsfree
 
-import be.rubenpieters.freeshowcase.{LiteralSearch, Video, VideoDsl, VideoSearchResult}
+import be.rubenpieters.freeshowcase._
 import cats._
 import cats.free.{Free, Inject}
+import be.rubenpieters.freeshowcase.Searchable.ops._
 
 /**
   * Created by ruben on 5/01/17.
@@ -10,6 +11,8 @@ import cats.free.{Free, Inject}
 
 class CatsVideoOps[F[_]](implicit I: Inject[VideoDsl, F]) {
   def literalSearch(literal: String) = Free.inject[VideoDsl, F](LiteralSearch(literal))
+
+  def literalSearchableSearch[A: Searchable](a: A) = literalSearch(a.asSearchLiteral)
 }
 
 object CatsVideoOps {

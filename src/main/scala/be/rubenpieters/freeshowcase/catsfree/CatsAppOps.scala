@@ -12,37 +12,35 @@ import be.rubenpieters.freeshowcase.Searchable.ops._
   */
 object CatsAppOps {
   def createPlaylistFromFavoriteTracks[F[_]](user: UserName)(implicit
-                                                           P: CatsPlaylistOps[F]
-                                                           , V: CatsVideoOps[F]
-                                                           , M: CatsMusicOps[F]
-                                                           , S: CatsSetlistOps[F]
+                                                             P: CatsPlaylistOps[F]
+                                                             , V: CatsVideoOps[F]
+                                                             , M: CatsMusicOps[F]
+                                                             , S: CatsSetlistOps[F]
   ): Free[F, Playlist] = for {
     tracks <- M.favoriteTracksForUser(user)
-    trackSearchTerms = tracks.map(track => track.asSearchTerms)
-    playlist <- createPlaylistFromLiteralList(trackSearchTerms)
+    playlist <- createPlaylistFromSearchableList(tracks)
   } yield playlist
 
   def createPlaylistFromArtistSetlist[F[_]](artist: ArtistName)(implicit
-                                                            P: CatsPlaylistOps[F]
-                                                            , V: CatsVideoOps[F]
-                                                            , M: CatsMusicOps[F]
-                                                            , S: CatsSetlistOps[F]
+                                                                P: CatsPlaylistOps[F]
+                                                                , V: CatsVideoOps[F]
+                                                                , M: CatsMusicOps[F]
+                                                                , S: CatsSetlistOps[F]
   ): Free[F, Playlist] = for {
     tracks <- S.getSetlistTracksForArtist(artist)
-    trackSearchTerms = tracks.map(track => List(track.artist, track.title))
-    playlist <- createPlaylistFromLiteralList(trackSearchTerms)
+    playlist <- createPlaylistFromSearchableList(tracks)
   } yield playlist
 
-  def createPlaylistFromLiteralList[F[_]](list: List[SearchTerms])(implicit
-                                                                    P: CatsPlaylistOps[F]
-                                                                    , V: CatsVideoOps[F]
+  def createPlaylistFromSearchableList[F[_], A: Searchable](list: List[A])(implicit
+                                                                           P: CatsPlaylistOps[F]
+                                                                           , V: CatsVideoOps[F]
   ): Free[F, Playlist] = for {
-    searchResults <- list.traverseU(r => V.literalSearch(r.mkString(" - ")))
-    relevantSearchResults = searchResults.zip(list).map{ case (videoSearchResult, terms) => VideoSearchResult(Video.applyMetric(terms.mkString(" - "), videoSearchResult.results))}
+    searchResults <- list.traverseU(V.literalSearchableSearch(_))
+    relevantSearchResults = searchResults.zip(list).map{ case (searchResult, a) => VideoSearchResult.reorderResults(a, searchResult)}
     newPlaylist <- P.createPlaylist()
-    updatedPlaylist <- relevantSearchResults.traverseU(searchResult => searchResult.results match {
+    _ <- relevantSearchResults.traverseU(searchResult => searchResult.results match {
       case head :: tail => P.addVideo(head, newPlaylist)
-      case _ => Free.pure[F, Either[PlaylistDslError, Unit]](Right(()))
+      case Nil => Free.pure[F, Either[PlaylistDslError, Unit]](Right(()))
     })
   } yield newPlaylist
 
