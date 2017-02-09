@@ -28,6 +28,9 @@ object VideoSearchResult {
       .map(_._1)
     )
   }
+
+  def mostRelevantResult[A: Searchable](a: A, videoSearchResult: VideoSearchResult): Option[Video] =
+    reorderResults(a, videoSearchResult).results.headOption
 }
 
 case class Video(title: VideoTitle, url: VideoUrl, videoId: VideoId)
