@@ -48,7 +48,6 @@ class CatsAppOpsTest extends FlatSpec with Matchers {
     val videosInterp = new TestCatsVideoInterp(Map("artist - song1" -> List("artist - song1", "b", "c"), "artist - song2" -> List("artist - song2", "2", "3")).mapValues(_.map(i => Video(i, i, i))))
     val playlists = mutable.Map[String, (Playlist, List[String])]()
     val playlistInterp = new TestCatsPlaylistInterp(playlists)
-    val musicInterp = new TestCatsMusicInterp(Map())
     val setlistInterp = new TestCatsSetlistInterp(Map("artist" -> List(Track("artist", "song1"), Track("artist", "song2"))))
     val interp = CatsAppOps.mkSetlistPlaylistVideoInterp(playlistInterp, videosInterp, setlistInterp)
 
