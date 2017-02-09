@@ -15,7 +15,7 @@ object CatsSetlistOps {
   implicit def SetlistOps[F[_]](implicit I: Inject[SetlistDsl, F]): CatsSetlistOps[F] = new CatsSetlistOps[F]
 }
 
-class TestCatsSetlistInterp(tracks: Map[String, List[Track]]) extends (SetlistDsl ~> Id) {
+class TestCatsSetlistInterp(tracks: Map[ArtistName, List[Track]]) extends (SetlistDsl ~> Id) {
   override def apply[A](fa: SetlistDsl[A]): Id[A] = fa match {
     case GetSetlistTracksForArtist(artist) => tracks(artist)
   }
